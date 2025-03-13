@@ -71,6 +71,8 @@ async function processLinks(page, links, config, extractors) {
 
     if (item.title) {
       item.url = link;
+      item.captured = new Date().toISOString();
+      item.portal = config.portalName;
       results.push(item);
       console.log(`Item ${i + 1} extraído com sucesso`);
     }

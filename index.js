@@ -7,10 +7,10 @@ async function main() {
   try {
     const results = await crawl(config, {
       title: extractors.extractTitle,
-      price: extractors.extractPrice,
       description: extractors.extractDescription,
       businessType: extractors.extractBusinessType,
       address: extractors.extractAddress,
+      price: extractors.extractPrice,
       bedroom: extractors.extractBedroom,
       bathroom: extractors.extractBathroom,
       garage: extractors.extractGarage,
