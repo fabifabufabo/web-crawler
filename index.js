@@ -2,9 +2,13 @@ const { crawl } = require('./src/crawler/core');
 const config = require('./src/config/crawler-config.js');
 const extractors = require('./src/crawler/extractors.js');
 const fs = require('fs').promises;
+const { testConnection, pool } = require('./db/postgresql.js');
 
 async function main() {
   try {
+
+    await testConnection();
+
     const results = await crawl(config, {
       title: extractors.extractTitle,
       description: extractors.extractDescription,
@@ -29,6 +33,9 @@ async function main() {
 
   } catch (error) {
     console.error('Erro na execução:', error);
+  } finally {
+    await pool.end();
+    console.log('Conexão com o banco de dados encerrada');
   }
 }
 
