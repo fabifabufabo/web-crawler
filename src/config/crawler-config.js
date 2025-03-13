@@ -2,7 +2,7 @@ const crawlerConfig = {
   headless: false,
   baseUrl: 'https://dudaimoveis.com.br/venda/residencial/florianopolis/',
   maxPages: 2,
-  maxItems: 5,
+  maxItems: 20,
   timeout: 30000,
   delayBetweenRequests: 2000,
   userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
@@ -19,6 +19,10 @@ const crawlerConfig = {
       type: 'xpath',
       template: '//*[@id="clb-imovel-topo"]/div/div[1]/div[2]/div/span/span[2]'
     },
+    description: {
+      type: 'css',
+      selector: '.col-xs-12.col-sm-12.col-md-7.col-lg-8:not(.hidden-print) p'
+    }
   }
 };
 

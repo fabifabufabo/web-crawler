@@ -32,6 +32,27 @@ async function extractPrice(page, config) {
   }
 }
 
+async function extractDescription(page, config) {
+  const s = config.fieldSelectors.description;
+
+  if (s.type !== 'css') throw new Error('Tipo de seletor não suportado para descrição');
+
+  try {
+    const text = await page.evaluate((selector) => {
+      const paragraphs = document.querySelectorAll(selector);
+      if (paragraphs.length > 0) {
+        return paragraphs[0].textContent.trim();
+      }
+      return null;
+    }, s.selector);
+
+    return text;
+  } catch (e) {
+    console.log(`Erro ao extrair descrição:`, e.message);
+    return null;
+  }
+}
+
 async function collectData(page, config, extractors) {
   const data = {};
   for (const [field, fn] of Object.entries(extractors)) {
@@ -43,5 +64,6 @@ async function collectData(page, config, extractors) {
 module.exports = {
   extractTitle,
   extractPrice,
+  extractDescription,
   collectData
 };
