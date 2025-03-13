@@ -66,6 +66,38 @@ async function extractAddress(page, config) {
   }
 }
 
+async function extractBedroom(page, config) {
+  const s = config.fieldSelectors.bedroom;
+  return await page.evaluate(selector => {
+    const el = document.querySelector(selector);
+    return el ? el.textContent.trim() : null;
+  }, s.selector);
+}
+
+async function extractBathroom(page, config) {
+  const s = config.fieldSelectors.bathroom;
+  return await page.evaluate(selector => {
+    const el = document.querySelector(selector);
+    return el ? el.textContent.trim() : null;
+  }, s.selector);
+}
+
+async function extractGarage(page, config) {
+  const s = config.fieldSelectors.garage;
+  return await page.evaluate(selector => {
+    const el = document.querySelector(selector);
+    return el ? el.textContent.trim() : null;
+  }, s.selector);
+}
+
+async function extractPrivateArea(page, config) {
+  const s = config.fieldSelectors.privateArea;
+  return await page.evaluate(selector => {
+    const el = document.querySelector(selector);
+    return el ? el.textContent.trim() : null;
+  }, s.selector);
+}
+
 async function collectData(page, config, extractors) {
   const data = {};
   for (const [field, fn] of Object.entries(extractors)) {
@@ -90,5 +122,9 @@ module.exports = {
   extractDescription,
   collectData,
   extractBusinessType,
-  extractAddress
+  extractAddress,
+  extractBedroom,
+  extractBathroom,
+  extractGarage,
+  extractPrivateArea
 };

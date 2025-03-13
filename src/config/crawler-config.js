@@ -26,6 +26,22 @@ const crawlerConfig = {
     address: {
       type: 'xpath',
       template: '//*[@id="clb-imovel-topo"]/div/div[1]/div[1]/p'
+    },
+    bedroom: {
+      type: 'css',
+      selector: '#amenity-dormitorios > span'
+    },
+    bathroom: {
+      type: 'css',
+      selector: '#amenity-banheiros > span'
+    },
+    garage: {
+      type: 'css',
+      selector: '#amenity-vagas > span'
+    },
+    privateArea: {
+      type: 'css',
+      selector: '#amenity-area-privativa > span'
     }
   }
 };

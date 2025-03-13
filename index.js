@@ -10,7 +10,11 @@ async function main() {
       price: extractors.extractPrice,
       description: extractors.extractDescription,
       businessType: extractors.extractBusinessType,
-      address: extractors.extractAddress
+      address: extractors.extractAddress,
+      bedroom: extractors.extractBedroom,
+      bathroom: extractors.extractBathroom,
+      garage: extractors.extractGarage,
+      privateArea: extractors.extractPrivateArea
     });
 
     console.log(`Extração concluída com ${results.length} itens`);
