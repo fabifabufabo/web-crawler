@@ -13,12 +13,12 @@ async function main() {
     console.log(`Extração concluída com ${results.length} itens`);
 
     await fs.writeFile(
-      'imoveis-titulos-precos.json',
+      'imoveis-encontrados.json',
       JSON.stringify(results, null, 2),
       'utf8'
     );
 
-    console.log('Crawler finalizado com sucesso! Resultados salvos em imoveis-titulos-precos.json');
+    console.log('Crawler finalizado com sucesso! Resultados salvos em imoveis-encontrados.json');
 
   } catch (error) {
     console.error('Erro na execução:', error);
