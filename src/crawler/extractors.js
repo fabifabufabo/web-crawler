@@ -61,9 +61,20 @@ async function collectData(page, config, extractors) {
   return data;
 }
 
+function extractBusinessType(page, config) {
+  const baseUrl = config.baseUrl;
+  const urlObj = new URL(baseUrl);
+  const segments = urlObj.pathname.split('/').filter(Boolean);
+  if (segments.length > 0) {
+    return segments[0].charAt(0).toUpperCase() + segments[0].slice(1);
+  }
+  return null;
+}
+
 module.exports = {
   extractTitle,
   extractPrice,
   extractDescription,
-  collectData
+  collectData,
+  extractBusinessType
 };

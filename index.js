@@ -8,7 +8,8 @@ async function main() {
     const results = await crawl(config, {
       title: extractors.extractTitle,
       price: extractors.extractPrice,
-      description: extractors.extractDescription
+      description: extractors.extractDescription,
+      businessType: extractors.extractBusinessType
     });
 
     console.log(`Extração concluída com ${results.length} itens`);
