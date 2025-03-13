@@ -22,6 +22,10 @@ const crawlerConfig = {
     description: {
       type: 'css',
       selector: '.col-xs-12.col-sm-12.col-md-7.col-lg-8:not(.hidden-print) p'
+    },
+    address: {
+      type: 'xpath',
+      template: '//*[@id="clb-imovel-topo"]/div/div[1]/div[1]/p'
     }
   }
 };

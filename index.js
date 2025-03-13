@@ -9,7 +9,8 @@ async function main() {
       title: extractors.extractTitle,
       price: extractors.extractPrice,
       description: extractors.extractDescription,
-      businessType: extractors.extractBusinessType
+      businessType: extractors.extractBusinessType,
+      address: extractors.extractAddress
     });
 
     console.log(`Extração concluída com ${results.length} itens`);

@@ -53,6 +53,19 @@ async function extractDescription(page, config) {
   }
 }
 
+async function extractAddress(page, config) {
+  const s = config.fieldSelectors.address;
+  if (s.type !== 'xpath') throw new Error('Tipo de seletor não suportado para endereço');
+  try {
+    const els = await page.$$(`xpath/.${s.template}`);
+    if (els.length) return page.evaluate(el => el.textContent.trim(), els[0]);
+    return null;
+  } catch (e) {
+    console.log(`Erro ao extrair endereço:`, e.message);
+    return null;
+  }
+}
+
 async function collectData(page, config, extractors) {
   const data = {};
   for (const [field, fn] of Object.entries(extractors)) {
@@ -76,5 +89,6 @@ module.exports = {
   extractPrice,
   extractDescription,
   collectData,
-  extractBusinessType
+  extractBusinessType,
+  extractAddress
 };
