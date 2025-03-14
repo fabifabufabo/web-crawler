@@ -141,19 +141,29 @@ node index.js
 
 ### Ciclo de Vida das Capturas
 
-O sistema gerencia automaticamente o processo de capturas:
+O sistema gerencia automaticamente o processo de capturas, com todas as mudanças de status sendo registradas na tabela `captura` do banco de dados PostgreSQL:
 
-1. **Inicialização**: O sistema busca capturas com status "pendente".
+1. **Inicialização**: O sistema busca capturas com status "pendente" no banco de dados.
 2. **Execução**: Para cada captura pendente:
-   - Atualiza o status para "rodando"
-   - Registra o timestamp de início
+   - Atualiza o status para "rodando" no banco de dados
+   - Registra o timestamp de início na coluna `data_hora_inicio`
    - Configura o crawler com os parâmetros necessários
    - Executa a captura
-3. **Finalização**:
-   - Sucesso: status "concluido"
-   - Erro: status "erro" com mensagem detalhada
-   - Registra o timestamp de finalização
-4. **Resultados**: Gera um arquivo JSON com os dados capturados para cada execução bem-sucedida.
+3. **Processamento de Dados**:
+   - Os dados capturados são estruturados conforme o mapeamento do Elasticsearch
+   - São aplicadas normalizações e transformações necessárias nos dados
+   - Os dados são preparados em lotes para indexação eficiente
+4. **Indexação no Elasticsearch**:
+   - Os dados processados são enviados para o Elasticsearch
+   - O sistema verifica a indexação bem-sucedida de cada lote
+   - Registra métricas sobre a quantidade de documentos indexados
+5. **Finalização**:
+   - Sucesso: status atualizado para "concluido" com resumo da indexação na coluna `observacoes`
+   - Erro: status atualizado para "erro" com mensagem detalhada na coluna `observacoes`
+   - Registra o timestamp de finalização na coluna `data_hora_fim`
+6. **Resultados**:
+   - Os dados ficam disponíveis para consulta no índice "imoveis" do Elasticsearch
+   - É gerado um arquivo JSON com os dados capturados para backup
 
 ### Agendando Novas Capturas
 
