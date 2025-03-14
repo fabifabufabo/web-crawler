@@ -53,7 +53,6 @@ async function extractAllLinks(page, config) {
     }
   }
 
-  console.log(`Total de ${allLinks.length} links extraídos.`);
   return allLinks;
 }
 
