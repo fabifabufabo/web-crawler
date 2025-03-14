@@ -6,18 +6,15 @@ const client = new Client(config);
 
 async function ensureElasticsearchReady(indexName = 'imoveis') {
   try {
-    const info = await client.info();
-    console.log(`✅ Conectado ao Elasticsearch (versão ${info.version.number})`);
+    await client.info();
+    console.log(`✅ Conexão com o Elasticsearch estabelecida com sucesso`);
 
     const exists = await client.indices.exists({
       index: indexName
     });
 
-    if (exists) {
-      console.log(`✅ Índice "${indexName}" existe`);
-    } else {
+    if (!exists) {
       const errorMsg = `Índice "${indexName}" não existe`;
-      console.error(`❌ ${errorMsg}`);
       throw new Error(errorMsg);
     }
 
