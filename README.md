@@ -1,6 +1,8 @@
 # Web Crawler para Imóveis
 
-Um sistema automatizado para captura e indexação de dados de imóveis de diversos portais imobiliários.
+Um sistema automatizado para captura e indexação de dados de imóveis de portais imobiliários.
+
+_Atualmente integrado somente com a Duda Imóveis_
 
 ## Visão Geral
 
