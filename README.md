@@ -100,8 +100,10 @@ Acesse `http://localhost:9200` - você deverá ver informações do cluster em f
 
 Execute o seguinte comando para criar o índice necessário:
 
+> **Nota**: Se seu Elasticsearch estiver configurado com autenticação, adicione o usuário e senha ao comando abaixo.
+
 ```bash
-curl -X PUT "http://localhost:9200/imoveis" -H "Content-Type: application/json" -d '{
+curl -X PUT "https://localhost:9200/imoveis" -u username:password --insecure -H "Content-Type: application/json" -d '{
   "settings": {
     "number_of_shards": 1,
     "number_of_replicas": 1
@@ -126,8 +128,6 @@ curl -X PUT "http://localhost:9200/imoveis" -H "Content-Type: application/json" 
   }
 }'
 ```
-
-> **Nota**: Se seu Elasticsearch estiver configurado com autenticação, adicione `-u username:password --insecure` ao comando acima.
 
 ## Uso do Sistema
 
