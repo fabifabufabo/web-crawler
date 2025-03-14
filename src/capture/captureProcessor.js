@@ -1,7 +1,7 @@
 const { crawl } = require('../crawler/core');
 const crawlerConfig = require('../config/crawler-config');
 const extractors = require('../crawler/extractors');
-const fs = require('fs').promises;
+const { saveToJsonFile } = require('./utils');
 const {
   startCapture,
   completeCapture,
@@ -54,12 +54,8 @@ async function processCapture(capture) {
     console.log(`Captura #${capture.id} concluída com ${results.length} itens`);
 
     const outputFile = `imoveis-captura-${capture.id}.json`;
-    await fs.writeFile(
-      outputFile,
-      JSON.stringify(results, null, 2),
-      'utf8'
-    );
-    console.log(`Resultados salvos em ${outputFile}`);
+    const savedFilePath = await saveToJsonFile(outputFile, results);
+    console.log(`Resultados salvos em ${savedFilePath}`);
 
     console.log(`Processando ${results.length} imóveis no Elasticsearch...`);
     const indexResult = await indexProperties(results);
