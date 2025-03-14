@@ -1,4 +1,3 @@
-const fs = require('fs').promises;
 const { testConnection, pool } = require('./db/postgresql.js');
 const { getPendingCaptures } = require('./db/captureManager.js');
 const { ensureElasticsearchReady } = require('./db/elasticsearch.js');
