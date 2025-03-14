@@ -10,6 +10,11 @@ const {
   markCaptureError
 } = require('./db/captureManager.js');
 
+const {
+  testConnection: testElasticsearchConnection,
+  indexExists
+} = require('./db/elasticsearch.js');
+
 async function processCapture(capture) {
   console.log(`\n==== Processando captura #${capture.id} para portal: ${capture.portal_nome} ====`);
 
@@ -72,11 +77,19 @@ async function processCapture(capture) {
 
 async function main() {
   try {
-    const connected = await testConnection();
-    if (!connected) {
-      console.error("❌ Não foi possível conectar ao banco de dados. Encerrando...");
-      return
+    const dbConnected = await testConnection();
+    if (!dbConnected) {
+      console.error("❌ Não foi possível conectar ao banco de dados PostgreSQL. Encerrando...");
+      return;
     }
+
+    const esConnected = await testElasticsearchConnection();
+    if (!esConnected) {
+      console.error("❌ Não foi possível conectar ao Elasticsearch. Encerrando...");
+      return;
+    }
+
+    await indexExists('imoveis');
 
     const captures = await getPendingCaptures();
     console.log(`Encontradas ${captures.length} capturas pendentes`);
