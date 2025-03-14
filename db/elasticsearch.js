@@ -4,19 +4,11 @@ const { v4: uuidv4 } = require('uuid');
 
 const client = new Client(config);
 
-async function testConnection() {
+async function ensureElasticsearchReady(indexName = 'imoveis') {
   try {
     const info = await client.info();
     console.log(`✅ Conectado ao Elasticsearch (versão ${info.version.number})`);
-    return true;
-  } catch (error) {
-    console.error('❌ Erro ao conectar ao Elasticsearch:', error.message);
-    return false;
-  }
-}
 
-async function indexExists(indexName = 'imoveis') {
-  try {
     const exists = await client.indices.exists({
       index: indexName
     });
@@ -24,11 +16,14 @@ async function indexExists(indexName = 'imoveis') {
     if (exists) {
       console.log(`✅ Índice "${indexName}" existe`);
     } else {
-      console.log(`❌ Índice "${indexName}" não existe`);
+      const errorMsg = `Índice "${indexName}" não existe`;
+      console.error(`❌ ${errorMsg}`);
+      throw new Error(errorMsg);
     }
-    return exists;
+
+    return true;
   } catch (error) {
-    console.error(`❌ Erro ao verificar se o índice ${indexName} existe:`, error.message);
+    console.error('❌ Erro ao verificar Elasticsearch:', error.message);
     throw error;
   }
 }
@@ -126,8 +121,7 @@ async function indexProperties(properties, indexName = 'imoveis') {
 
 module.exports = {
   client,
-  testConnection,
-  indexExists,
+  ensureElasticsearchReady,
   normalizePropertyData,
   indexProperties
 };
