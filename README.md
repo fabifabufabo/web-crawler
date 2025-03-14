@@ -59,7 +59,12 @@ ELASTICSEARCH_SNIFF_ON_CONNECTION_FAULT=true
 psql -U $(whoami) -f scripts/setup_database.sql
 ```
 
-3. Se necessário, ajuste as configurações de conexão na aplicação.
+3. Insira os portais a serem rastreados na tabela `portal`, por exemplo:
+
+```sql
+INSERT INTO portal (nome, url, observacoes) VALUES
+('Duda Imoveis', 'https://dudaimoveis.com.br/', 'Lorem ipsum dolor sit amet. Et voluptatem iste aut perferendis nisi sed veritatis culpa ut recusandae magnam sed porro minus et asperiores libero.');
+```
 
 #### Estrutura do Banco de Dados
 
@@ -91,10 +96,6 @@ O sistema utiliza duas tabelas principais:
 4. Inicie o serviço:
    - **Windows**: Execute `bin\elasticsearch.bat`
    - **macOS/Linux**: Execute `./bin/elasticsearch`
-
-#### Verificação
-
-Acesse `http://localhost:9200` - você deverá ver informações do cluster em formato JSON.
 
 #### Criação do Índice de Imóveis
 
@@ -167,7 +168,7 @@ O sistema gerencia automaticamente o processo de capturas, com todas as mudança
 
 ### Agendando Novas Capturas
 
-Para criar uma nova tarefa de captura, insira um registro na tabela `captura`:
+Para criar uma nova tarefa de captura, insira um registro na tabela `captura`, por exemplo:
 
 ```sql
 INSERT INTO captura (id_portal, filtros, status, data_hora_inicio) VALUES
@@ -185,7 +186,7 @@ O campo `filtros` aceita um objeto JSON com as seguintes propriedades:
 
 - `tipo_negocio`: Tipo de transação ("venda", "aluguel")
 - `tipo_imovel`: Categoria do imóvel ("residencial", "comercial")
-- `cidade`: Localização alvo
+- `cidade`: Localização alvo (Ex: "florianopolis", "criciuma", "sao-jose") - Atente-se que a cidade deve ser formatada conforme a URL do portal
 - `max_paginas`: Limite de páginas a processar
 - `max_itens`: Número máximo de imóveis a capturar
 
