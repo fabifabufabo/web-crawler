@@ -1,5 +1,5 @@
 const { Pool } = require('pg');
-const dbConfig = require('../src/config/db-config.js'); // Fixed path
+const dbConfig = require('../src/config/db-config.js');
 
 const pool = new Pool({
   user: dbConfig.user || 'postgres',

@@ -1,13 +1,24 @@
 const { crawl } = require('./src/crawler/core');
-const config = require('./src/config/crawler-config.js');
+const crawlerConfig = require('./src/config/crawler-config.js');
 const extractors = require('./src/crawler/extractors.js');
 const fs = require('fs').promises;
 const { testConnection, pool } = require('./db/postgresql.js');
+const { getPortalParams } = require('./db/getPortal.js');
 
 async function main() {
   try {
 
     await testConnection();
+
+    console.log('Iniciando crawler...');
+
+    const portalParams = await getPortalParams();
+
+    const config = {
+      ...crawlerConfig,
+      portalName: portalParams.portal,
+      baseUrl: `${portalParams.baseUrl}/venda/residencial/florianopolis/`,
+    }
 
     const results = await crawl(config, {
       title: extractors.extractTitle,
