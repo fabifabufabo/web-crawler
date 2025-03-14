@@ -2,11 +2,11 @@ const { Pool } = require('pg');
 const dbConfig = require('../src/config/db-config.js');
 
 const pool = new Pool({
-  user: dbConfig.user || 'postgres',
-  host: dbConfig.host || 'localhost',
-  database: dbConfig.database || 'web_crawler_db',
-  password: dbConfig.password || '',
-  port: dbConfig.port || 5432
+  user: dbConfig.user,
+  host: dbConfig.host,
+  database: dbConfig.database,
+  password: dbConfig.password,
+  port: dbConfig.port
 });
 
 const testConnection = async () => {
