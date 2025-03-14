@@ -12,7 +12,7 @@ async function crawl(config, extractors) {
     await page.goto(config.baseUrl, { waitUntil: 'networkidle2', timeout: config.timeout });
 
     const results = await processAllPages(page, config, extractors);
-    console.log(`Total de ${results.length} imóveis extraídos`);
+    console.log(`\nTotal de ${results.length} imóveis extraídos`);
 
     return results;
   } catch (e) {

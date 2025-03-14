@@ -1,11 +1,9 @@
 const crawlerConfig = {
-  headless: false,
-  baseUrl: 'https://dudaimoveis.com.br/venda/residencial/florianopolis/',
-  portalName: 'Duda Imóveis',
-  maxPages: 1,
-  maxItems: 2,
+  headless: true,
+  maxPages: 10, // Usado quando não é definido na captura
+  maxItems: 100, // Usado quando não é definido na captura
   timeout: 30000,
-  delayBetweenRequests: 100,
+  delayBetweenRequests: 2000,
   userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
   fieldSelectors: {
     link: {

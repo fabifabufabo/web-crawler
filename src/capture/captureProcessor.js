@@ -18,9 +18,7 @@ async function processCapture(capture) {
     const filters = capture.filtros || {};
     let captureBaseUrl = capture.portal_url;
 
-    if (filters.tipo_negocio) {
-      captureBaseUrl = `${captureBaseUrl}/${filters.tipo_negocio}`;
-    }
+    captureBaseUrl = `${captureBaseUrl}/${filters.tipo_negocio || 'venda'}`;
 
     if (filters.tipo_imovel) {
       captureBaseUrl = `${captureBaseUrl}/${filters.tipo_imovel}`;
@@ -39,6 +37,7 @@ async function processCapture(capture) {
     };
 
     console.log(`Iniciando crawler para: ${config.baseUrl}`);
+
     const results = await crawl(config, {
       title: extractors.extractTitle,
       description: extractors.extractDescription,
