@@ -6,18 +6,8 @@ const { processCapture } = require('./src/capture/captureProcessor');
 
 async function main() {
   try {
-    const dbConnected = await testConnection();
-    if (!dbConnected) {
-      console.error("❌ Não foi possível conectar ao banco de dados PostgreSQL. Encerrando...");
-      return;
-    }
-
-    try {
-      await ensureElasticsearchReady();
-    } catch (error) {
-      console.error("❌ Falha na verificação do Elasticsearch. Encerrando...");
-      return;
-    }
+    await testConnection();
+    await ensureElasticsearchReady();
 
     const captures = await getPendingCaptures();
     console.log(`Encontradas ${captures.length} capturas pendentes`);
@@ -32,12 +22,15 @@ async function main() {
     }
 
     console.log('\n✅ Todas as capturas foram processadas');
-
-  } catch (error) {
-    console.error('❌ Erro na execução principal:', error);
+  } catch (err) {
+    console.error('❌ Erro na execução principal:', err);
   } finally {
-    await pool.end();
-    console.log('\nConexão com o banco de dados encerrada');
+    try {
+      await pool.end();
+      console.log('\nConexão com o banco de dados encerrada');
+    } catch (e) {
+      console.error('\nErro ao encerrar a conexão com o banco de dados:', e.message);
+    }
   }
 }
 

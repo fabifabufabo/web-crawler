@@ -13,11 +13,12 @@ const testConnection = async () => {
   try {
     const client = await pool.connect();
     console.log('✅ Conexão com o PostgreSQL estabelecida com sucesso');
+
     client.release();
     return true;
   } catch (error) {
     console.error('❌ Erro de conexão com o PostgreSQL:', error.message);
-    return false;
+    throw error;
   }
 };
 
