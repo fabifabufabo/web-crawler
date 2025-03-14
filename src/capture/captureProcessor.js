@@ -61,14 +61,14 @@ async function processCapture(capture) {
     );
     console.log(`Resultados salvos em ${outputFile}`);
 
-    console.log(`Indexando ${results.length} imóveis no Elasticsearch...`);
+    console.log(`Processando ${results.length} imóveis no Elasticsearch...`);
     const indexResult = await indexProperties(results);
 
     if (indexResult.success) {
-      console.log(`Indexação concluída: ${indexResult.indexed} imóveis inseridos no Elasticsearch`);
+      console.log(`Indexação concluída: ${indexResult.indexed} novos imóveis inseridos, ${indexResult.updated} imóveis atualizados no Elasticsearch`);
       await completeCapture(capture.id);
     } else {
-      const errorMsg = `Erro parcial na indexação: ${indexResult.failed} de ${results.length} imóveis não foram indexados`;
+      const errorMsg = `Erro parcial na indexação: ${indexResult.failed} de ${results.length} imóveis não foram processados`;
       console.error(errorMsg);
       await markCaptureError(capture.id, errorMsg);
     }
