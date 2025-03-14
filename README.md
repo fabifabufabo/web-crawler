@@ -136,7 +136,7 @@ curl -X PUT "https://localhost:9200/imoveis" -u username:password --insecure -H 
 Para iniciar o processo de crawler e processar todas as capturas pendentes:
 
 ```bash
-node index.js
+npm start
 ```
 
 ### Ciclo de Vida das Capturas
